@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>ㅁiU월드에 오신 걸 환영합니다~</title>
+    <style>
+        /* 기본 배경 및 폰트 설정 */
+        body {
+            background-color: #a3a3a3;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0; font-family: "돋움", dotum, sans-serif;
+        }
+
+        /* 1. 메인 프레임 */
+        .outer-box {
+            width: 950px; height: 560px;
+            background-color: #b3d9ff;
+            border: 1px solid #777; border-radius: 15px;
+            padding: 20px 40px 20px 20px;
+            display: flex; position: relative; gap: 10px;
+        }
+
+        /* 2. 내부 흰색 점선 틀 */
+        .inner-box {
+            background-color: white; border: 2px dashed #999; border-radius: 10px;
+            flex: 1; display: flex; padding: 15px; gap: 15px; position: relative;
+        }
+
+        /* --- 왼쪽 섹션 (공통) --- */
+        .left-section { width: 170px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .visitor-count { font-size: 10px; text-align: center; margin-bottom: 10px; }
+        .visitor-count b { color: red; }
+        .profile-img { border: 1px solid #ccc; width: 100%; height: 150px; background: #eee; margin-bottom: 10px; overflow: hidden;}
+        .profile-img img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name { color: #238db3; font-weight: bold; margin-bottom: 10px; text-align: center; }
+
+        /* [추가] 사이트 전체 마우스 커서를 도트로 변경 */
+body {
+   cursor: url('https://cdn.cursors-4u.net/previews/cute-polka-dotted-purple-bow-tie-ribbon-ea8a9deb-32.webp') 32 32, auto !important;
+}
+
+/* [추가] 파도타기 버튼 스타일 (싸이 주황색) */
+.wave-btn {
+    background-color: #ff8a00; /* 싸이 주황색 */
+    color: white;
+    border: 1px solid #e67e00;
+    border-radius: 3px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 5px; /* 드롭다운과의 간격 */
+    transition: background-color 0.2s; /* 호버 효과 */
+}
+.wave-btn:hover {
+    background-color: #e67e00; /* 마우스 올렸을 때 더 진하게 */
+}
+
+/* [기존 교체] 왼쪽 하단 일촌 파도타기 영역 */
+.left-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto; /* 맨 아래로 붙이기 */
+    padding-bottom: 10px;
+}
+.left-bottom select {
+    font-size: 11px;
+    color: #666;
+    border: 1px solid #ccc;
+    padding: 2px;
+    width: 100px;
+}
+
+        /* --- 중앙 메인 콘텐츠 (탭에 따라 변경) --- */
+        .main-section { flex: 1; display: flex; flex-direction: column; padding-right: 5px; }
+        .main-title { font-size: 13px; color: #238db3; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        
+        /* 탭별 콘텐츠 영역 */
+        .tab-content { display: none; flex: 1; overflow-y: auto; }
+        .tab-content.active { display: block; }
+
+        .miniroom-area { width: 100%; height: 200px; border: 1px solid #ddd; background: #f9f9f9; margin-bottom: 15px; }
+        
+        /* 일촌평 디자인 */
+        .guest-say { font-size: 11px; margin-top: 10px; }
+        .input-box { background: #f4f4f4; padding: 8px; display: flex; gap: 5px; margin-bottom: 10px; border-radius: 3px; }
+        .input-box input { flex: 1; border: 1px solid #ccc; font-size: 11px; padding: 3px; }
+        .comment-item { border-bottom: 1px dashed #eee; padding: 5px 0; line-height: 1.4; font-size: 11px; }
+        .comment-item b { color: #238db3; }
+
+/* 오른쪽 사이드바 전체 설정 */
+.right-sidebar { 
+    width: 160px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    flex-shrink: 0;
+    /* [수정] 아래로 밀리지 않도록 상단 정렬 */
+    justify-content: flex-start; 
+}
+
+/* BGM 박스 디자인 (이미지 1 느낌 재현) */
+.sidebar-box { 
+    background: #f1f1f1; /* 연회색 배경 */
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    font-size: 11px; 
+    border-radius: 3px;
+}
+
+.sidebar-title { 
+    font-size: 11px;
+    font-weight: bold; 
+    color: #666;
+    border-bottom: 1px solid #ddd; 
+    margin-bottom: 8px; 
+    padding-bottom: 3px; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.music-list { list-style: none; padding: 0; margin: 0; }
+.music-list li { 
+    margin-bottom: 5px; 
+    font-size: 10px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; /* 제목 길면 ... 처리 */
+}
+        /* --- 오른쪽 메뉴 탭 --- */
+        .side-tabs {
+            position: absolute; right: -5px; top: 60px;
+            display: flex; flex-direction: column; gap: 3px;
+        }
+        /* 수정된 탭 버튼 스타일 */
+.tab-btn {
+    width: 60px;             /* 가로 길이를 조금 늘려주세요 */
+    height: 30px;            /* 세로 길이를 적당히 조절 */
+    padding: 5px; 
+    background-color: #238db3; 
+    color: white;
+    border: 1px solid #1a6d8a; 
+    border-radius: 0 5px 5px 0; /* 오른쪽만 둥글게 */
+    font-size: 11px; 
+    cursor: pointer; 
+    text-align: center;
+    
+    /* [수정 포인트] */
+    writing-mode: horizontal-tb; /* 가로 방향으로 변경 (기본값) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+        .tab-btn.active { background-color: white; color: black; border-left: none; font-weight: bold; }
+    /* 퍼가요 말풍선 스타일 */
+.scrap-popup {
+    display: none; /* 평소엔 숨김 */
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ff8a00; /* 싸이 주황색 */
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: #ff8a00;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: "돋움", dotum, sans-serif;
+    z-index: 1000; /* 맨 위에 띄우기 */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+/* 퍼가요 도트 아이콘 (선택 사항) */
+.scrap-popup::before {
+    content: "🐹 ";
+}
+    </style>
+</head>
+<body>
+
+<div class="outer-box">
+    <div class="inner-box">
+        <div class="left-section">
+            <div class="visitor-count">TODAY <b>609</b> | TOTAL 2008</div>
+            <div class="profile-img">
+                <img src="https://raw.githubusercontent.com/da1eee0609/meu2026/main/0325.gif" alt="프로필">
+            </div>
+            <div class="profile-name">채오니</div>
+            <div style="font-size:11px; color:#666; text-align:center; margin-bottom: 10px;">
+        TODAY IS... <span style="color:red;">설렘♥</span>
+    </div>
+    <div class="left-bottom">
+        <select id="wave-select">
+            <option value="">일촌 파도타기</option>
+            <option value="https://www.youtube.com/@ifeye">YOUTUBE</option>
+            <option value="https://x.com/ifeye_official">TWITTER</option>
+            <option value="https://www.instagram.com/ifeye_official">INSTAGRAM</option>
+            <option value="https://artist.mnetplus.world/main/stg/ifeye/home">PLUSCHAT</option>
+        </select>
+        <button class="wave-btn" onclick="surf()">파도타기</button>
+    </div>
+        </div>
+
+        <div class="main-section">
+            <div class="main-title">미유모롤의 생파에 오신 걸 환영합니다!</div>
+
+            <div id="home" class="tab-content active">
+                <div class="miniroom-area">
+                    </div>
+                <div class="guest-say">
+                    <div style="color: #238db3; font-weight: bold; margin-bottom: 10px;">What friends say</div>
+                    <div class="input-box">
+                        <input type="text" id="comment-input" placeholder="일촌평을 남겨주세요!">
+                        <button onclick="addComment()">확인</button>
+                    </div>
+                    <div id="comment-list">
+                        <div class="comment-item"><b>채오니엄마</b> 우리 미유 생일 너무 축하해! 퍼가요~♡</div>
+                        <div class="comment-item"><b>도토리부자</b> 미니홈피 진짜 예쁘네요. 생일 축하해요!</div>
+                    </div>
+                </div>
+            </div>
+
+           <div id="profile" class="tab-content">
+    <div style="padding: 15px; font-size: 11px; line-height: 1.8; color: #555;">
+        <div style="border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">
+            <b style="color: #238db3; font-size: 13px;">[백문백답] 채오니 와쪄욤..☆</b>
+        </div>
+
+        <p><b>01. 이름?</b> 미유 공주님</p>
+        <p><b>02. 생일?</b> 2008년 6월 9일 (완전 소중함)</p>
+        <p><b>03. 별명?</b> 채오니, 미유모롤, 고양이, 공감 요정</p>
+        <p><b>04. 나의 보물 1호?</b> 이포리~~~</p>
+        <p><b>05. 요즘 젤 많이 하는 생각?</b> 이포리 보고싶당.</p>
+        <p><b>06. 좌우명?</b> 이포리의 행복은 곧 나의 행복이다.</p>
+        <p><b>07. 좋아하는 색깔?</b> 보라색! 무조건 보라색!</p>
+        <p><b>08. 싫어하는 거?</b> 이포리랑 못 만나는 거...</p>
+        <p><b>09. 지금 내 기분?</b> 미니홈피 꾸며서 100% 충전 완료!</p>
+        <p><b>10. 일촌이란?</b> 미유를 함께 사랑하는 소중한 사람들</p>
+        <p><b>11. 가장 행복했을 때?</b> 2026년 1월 24일 첫 공연 보러 갔을 때</p>
+        <p><b>12. 나의 MBTI?</b> M.E.N.U (미유밖에 모르는 유형)(절대 메뉴라고 하지 않음)</p>
+        <p><b>13. 젤 자신 있는 거?</b> 이포리 앓기, 무대 부수기</p>
+        <p><b>14. 무인도에 간다면?</b> 이포리, 멤버들, 물</p>
+        <p><b>15. 10년 뒤 나의 모습?</b> 프로아이도루</p>
+        <p><b>16. 나에게 'ifory'란?</b> 내 삶의 비타민이자 이유</p>
+        <p><b>17. 지금 가장 먹고 싶은 거?</b> 이포리의 사랑</p>
+        <p><b>18. 나의 잠버릇?</b> 꿈속에서도 이포리랑 파티함</p>
+        <p><b>19. 마지막 한마디?</b> 일촌평 안 남기고 가면 섭섭해! (퍼가요~♡)</p>
+        <p><b>20. 업데이트 날짜?</b> 2026. 06. 09</p>
+        
+        <hr style="border: 1px dashed #eee; margin: 15px 0;">
+        <div style="text-align: center; color: #999; font-size: 10px;">
+            ⓒ 2026 muse0609_ All Rights Reserved.
+        </div>
+    </div>
+</div>
+
+<div id="photo" class="tab-content" style="position: relative;"> <b style="color:#238db3;">[Photo Album]</b><hr>
+    
+    <div id="scrap-msg" class="scrap-popup" style="
+        display: none;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 2px solid #ff8a00;
+        border-radius: 10px;
+        padding: 10px 20px;
+        color: #ff8a00;
+        font-weight: bold;
+        font-size: 14px;
+        z-index: 1000;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    ">퍼가요~♡</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;">
+        
+        <div class="photo-item" style="background: #fff; border: 1px solid #ddd; padding: 10px; text-align: center;">
+            <div style="width: 100%; aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 8px;">
+                <img src="465A8657.JPG" 
+                     onclick="showScrapMsg()" 
+                     style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;" 
+                     alt="사진1">
+            </div>
+            <div style="font-size: 11px; color: #333; font-weight: bold;">✨미유모롤 윙쿠>3-</div>
+        </div>
+
+        <div class="photo-item" style="background: #fff; border: 1px solid #ddd; padding: 10px; text-align: center;">
+            <div style="width: 100%; aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 8px;">
+                <img src="사진주소2" 
+                     onclick="showScrapMsg()" 
+                     style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;" 
+                     alt="사진2">
+            </div>
+            <div style="font-size: 11px; color: #333; font-weight: bold;">🧸 픽셀 캐릭터 완성!</div>
+        </div>
+
+    </div>
+</div>
+
+        <div id="guestbook" class="tab-content" style="padding: 10px; overflow-y: auto; max-height: 450px;">
+    
+    <div style="margin-bottom: 20px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+        <div style="background-color: #f1f1f1; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 2px;">
+            <div style="font-size: 11px; color: #666;">
+                <span style="color: #238db3; font-weight: bold;">NO. 1</span> 
+                <span style="margin-left: 10px; color: #333;">미유팬1호</span> 🏠
+            </div>
+            <div style="font-size: 11px; color: #999;">(2026.03.25 14:30)</div>
+        </div>
+        
+        <div style="display: flex; padding: 10px 0;">
+            <div style="width: 80px; text-align: center;">
+                <img src="https://i.ibb.co/68vM97D/pixel-heart-cursor.png" style="width: 50px; filter: grayscale(0.5);">
+            </div>
+            <div style="flex: 1; font-size: 12px; line-height: 1.6; color: #444; padding-left: 10px;">
+                미유야 생일 너무 축하해! <br>
+                이번 생카 주최해주셔서 너무 감사합니다. <br>
+                미니홈피 구경하는 재미가 쏠쏠하네요! 🧡
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+        <div style="background-color: #f1f1f1; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 11px; color: #666;">
+                <span style="color: #238db3; font-weight: bold;">NO. 2</span> 
+                <span style="margin-left: 10px; color: #333;">뮹뮹사랑</span> 🏠
+            </div>
+            <div style="font-size: 11px; color: #999;">(2026.03.25 15:45)</div>
+        </div>
+        <div style="display: flex; padding: 10px 0;">
+            <div style="width: 80px; text-align: center;">
+                <img src="https://i.ibb.co/68vM97D/pixel-heart-cursor.png" style="width: 50px;">
+            </div>
+            <div style="flex: 1; font-size: 12px; line-height: 1.6; color: #444; padding-left: 10px;">
+                퍼가요~♡ <br>
+                BGM 선곡 센스 대박이에요! <br>
+                내일 공연장에서 만나요! ✨
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="right-sidebar">   
+    <div class="sidebar-box">
+        <div class="sidebar-title">
+            <span>싸이 BGM</span>
+            <span style="color: #ff8a00; font-size: 9px;">♬</span>
+        </div>
+        
+        <audio id="my-bgm" src="https://raw.githubusercontent.com/da1eee0609/meu2026/main/byesummer.mp3" loop></audio>
+        
+        <ul class="music-list">
+            <li id="bgm-item" style="color:#666; cursor:pointer;" onclick="toggleBgm()">
+                <span id="bgm-status">▷</span> 1. Bye, Summer - 미유
+            </li>
+            <li style="color:#999;">2. NERDY - ifeye</li>
+            <li style="color:#999;">3. IRL - ifeye</li>
+        </ul>
+        
+        <div style="margin-top:8px; height:3px; background:#ddd; position:relative;">
+            <div id="bgm-progress" style="width:0%; height:100%; background:#ff8a00; transition: width 0.1s;"></div>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="side-tabs">
+        <button class="tab-btn active" onclick="switchTab(this, 'home')">홈</button>
+        <button class="tab-btn" onclick="switchTab(this, 'profile')">프로필</button>
+        <button class="tab-btn" onclick="switchTab(this, 'photo')">사진첩</button>
+        <button class="tab-btn" onclick="switchTab(this, 'guestbook')">방명록</button>
+    </div>
+</div>
+
+<script>
+    // 탭 전환 기능
+    function switchTab(btn, tabId) {
+        // 모든 탭 콘텐츠 숨기기
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(c => c.classList.remove('active'));
+
+        // 모든 버튼 비활성화
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        // 선택한 탭 보이기
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // [추가] 파도타기 기능 함수
+function surf() {
+    const select = document.getElementById('wave-select');
+    const url = select.value;
+
+    if (url === "") {
+        alert("파도탈 일촌을 선택해주세요! 🌊");
+        return;
+    }
+
+    // 새 탭에서 해당 주소 열기
+    window.open(url, '_blank');
+    
+    // 선택창 초기화 (다시 '일촌 파도타기'로)
+    select.value = "";
+}
+    
+    // 일촌평 추가 기능
+    function addComment() {
+        const input = document.getElementById('comment-input');
+        const list = document.getElementById('comment-list');
+        
+        if (input.value.trim() === "") return;
+
+        const newComment = document.createElement('div');
+        newComment.className = 'comment-item';
+        newComment.innerHTML = `<b>이포리♡</b> ${input.value}`;
+        
+        list.insertBefore(newComment, list.firstChild);
+        input.value = "";
+    }
+
+    // BGM
+    function toggleBgm() {
+    const bgm = document.getElementById('my-bgm');
+    const bgmItem = document.getElementById('bgm-item');
+    const bgmStatus = document.getElementById('bgm-status');
+    
+    if (bgm.paused) {
+        // 재생 시작
+        bgm.play();
+        bgm.volume = 0.4; // 너무 크지 않게 볼륨 조절
+        bgmStatus.innerText = "▶"; // 꽉 찬 화살표로 변경
+        bgmItem.style.color = "#ff8a00"; // 재생 중일 때 주황색으로 변경
+        bgmItem.style.fontWeight = "bold";
+    } else {
+        // 정지
+        bgm.pause();
+        bgmStatus.innerText = "▷"; // 빈 화살표로 변경
+        bgmItem.style.color = "#666"; // 원래 색으로 복구
+        bgmItem.style.fontWeight = "normal";
+    }
+}
+    // 퍼가요 말풍선 보여주기 함수
+function showScrapMsg() {
+    const msg = document.getElementById('scrap-msg');
+    
+    // 말풍선 보이기
+    msg.style.display = 'block';
+    
+    // 1.5초 뒤에 자동으로 숨기기
+    setTimeout(function() {
+        msg.style.display = 'none';
+    }, 1500); // 1500ms = 1.5초
+}
+    // 기존 toggleBgm 함수 안에 추가하거나 아래에 따로 두세요
+const bgm = document.getElementById('my-bgm');
+const progressBar = document.getElementById('bgm-progress');
+
+bgm.ontimeupdate = function() {
+    const progress = (bgm.currentTime / bgm.duration) * 100;
+    if(progressBar) progressBar.style.width = progress + "%";
+};
+</script>
+
+</body>
+</html>
