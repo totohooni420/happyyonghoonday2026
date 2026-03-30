@@ -401,7 +401,7 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-const scriptURL = ' https://script.google.com/macros/s/AKfycbx8eZI_vPVfnQE20e8onGXIdpT86hURz8dDKtscihNYl7lRtny5f46DMPKPrBtm8SGY/exec';
+const scriptURL = ' https://script.google.com/macros/s/AKfycbzhv4QCaqNTGBCoyjpibnaOm1TOWf6EY_RmlYnrd3kxjC-Rbtnn0tvN6OqXEIpDBvbxIw/exec';
 
     // 페이지 열리자마자 실행!
     window.onload = function() {
@@ -439,10 +439,14 @@ function addComment() {
 
     if (!content) return alert("일촌평을 입력해주세요!");
 
-    fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ nickname: nickname, content: content })
+    // HTML 내 script 부분
+fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify({ 
+        nickname: nickname, // 이 이름표(nickname)가 doPost의 jsonData.nickname과 연결돼요!
+        content: content 
     })
+})
     .then(() => {
         nickInput.value = ''; // 이름창 비우기
         contentInput.value = ''; // 입력창 비우기
