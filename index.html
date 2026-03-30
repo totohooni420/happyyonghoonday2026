@@ -401,7 +401,7 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-const scriptURL = ' https://script.google.com/macros/s/AKfycbzGceABk7xs0MRzfXh5I1WxCOTemzpGYOTqHkQYBnR6LbdlfxcGkOCT5Q9zaDpVCE4b/exec';
+const scriptURL = ' https://script.google.com/macros/s/AKfycbx8eZI_vPVfnQE20e8onGXIdpT86hURz8dDKtscihNYl7lRtny5f46DMPKPrBtm8SGY/exec';
 
     // 페이지 열리자마자 실행!
     window.onload = function() {
@@ -421,8 +421,9 @@ function loadComments() {
             const newItem = document.createElement('div');
             newItem.className = 'comment-item';
             // 시트에서 가져온 nickname을 <b> 태그에 넣어줌
-            newItem.innerHTML = `<b>${item.nickname || '일촌'}</b> ${item.content}`;
-            list.appendChild(newItem);
+            const name = item.nickname ? item.nickname : '일촌'; 
+    newItem.innerHTML = `<b>${name}</b> ${item.content}`;
+    list.appendChild(newItem);
         });
     })
     .catch(error => console.error('불러오기 에러:', error));
