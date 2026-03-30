@@ -398,11 +398,22 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-// [확인] 주소 앞에 공백이 없는지 다시 한 번 체크했습니다!
 const scriptURL = 'https://script.google.com/macros/s/AKfycbz8pyolf5ijl6eY3pny3CQaDSKOwIHb4BkUZEu9dUgiSBIVXUCJwLhxcNaXK2dYtWj2/exec';
 
 window.onload = function() {
     loadComments();
+    
+    // BGM 진행 바 설정 (페이지 로드 시 바로 연결)
+    const myBgm = document.getElementById('my-bgm');
+    const progressBar = document.getElementById('bgm-progress');
+    if (myBgm && progressBar) {
+        myBgm.ontimeupdate = function() {
+            if(myBgm.duration > 0) {
+                const progress = (myBgm.currentTime / myBgm.duration) * 100;
+                progressBar.style.width = progress + "%";
+            }
+        };
+    }
 };
 
 // 1. 일촌평 불러오기
@@ -427,7 +438,6 @@ function loadComments() {
     })
     .catch(err => {
         console.error("불러오기 에러:", err);
-        list.innerHTML = '<div class="comment-item">목록을 불러오는 중이에요.. ✨</div>';
     });
 }
 
@@ -435,7 +445,6 @@ function loadComments() {
 function addComment() {
     const nickInput = document.getElementById('nickname-input');
     const contentInput = document.getElementById('comment-input');
-    
     const nickname = nickInput.value.trim() || "일촌";
     const content = contentInput.value.trim();
 
@@ -443,24 +452,18 @@ function addComment() {
 
     fetch(scriptURL, {
         method: 'POST',
-        body: JSON.stringify({ 
-            user_name: nickname, 
-            user_msg: content 
-        })
+        body: JSON.stringify({ user_name: nickname, user_msg: content })
     })
-    .then(response => {
+    .then(() => {
         alert(nickname + "님의 일촌평이 등록되었습니다! 🥓");
         nickInput.value = '';
         contentInput.value = '';
         loadComments(); 
     })
-    .catch(err => {
-        console.error("전송 에러:", err);
-        alert("전송에 실패했어요. 인터넷 연결이나 배포 설정을 확인해봐!");
-    });
+    .catch(err => alert("전송에 실패했어요."));
 }
 
-// 탭 전환 기능
+// 탭 전환
 function switchTab(btn, tabId) {
     const contents = document.querySelectorAll('.tab-content');
     contents.forEach(c => c.classList.remove('active'));
@@ -470,7 +473,7 @@ function switchTab(btn, tabId) {
     btn.classList.add('active');
 }
 
-// 파도타기 기능
+// 파도타기
 function surf() {
     const select = document.getElementById('wave-select');
     const url = select.value;
@@ -479,14 +482,14 @@ function surf() {
     select.value = "";
 }
 
-// BGM 기능
+// BGM 재생/일시정지 (여기가 음악 버튼 핵심!)
 function toggleBgm() {
     const bgm = document.getElementById('my-bgm');
     const bgmItem = document.getElementById('bgm-item');
     const bgmStatus = document.getElementById('bgm-status');
     
     if (bgm.paused) {
-        bgm.play();
+        bgm.play().catch(e => console.error("재생 에러:", e));
         bgm.volume = 0.4;
         bgmStatus.innerText = "▶"; 
         bgmItem.style.color = "#6b30ff";
@@ -504,18 +507,6 @@ function showScrapMsg() {
     const msg = document.getElementById('scrap-msg');
     msg.style.display = 'block';
     setTimeout(() => { msg.style.display = 'none'; }, 1500);
-}
-
-// BGM 진행 바
-const myBgm = document.getElementById('my-bgm');
-const progressBar = document.getElementById('bgm-progress');
-if (myBgm) {
-    myBgm.ontimeupdate = function() {
-        if(myBgm.duration > 0) {
-            const progress = (myBgm.currentTime / myBgm.duration) * 100;
-            if(progressBar) progressBar.style.width = progress + "%";
-        }
-    };
 }
 </script>
 
