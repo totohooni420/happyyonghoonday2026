@@ -401,7 +401,7 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-const scriptURL = ' https://script.google.com/macros/s/AKfycbzhv4QCaqNTGBCoyjpibnaOm1TOWf6EY_RmlYnrd3kxjC-Rbtnn0tvN6OqXEIpDBvbxIw/exec';
+const scriptURL = ' https://script.google.com/macros/s/AKfycbyWzBI3T4idGHaWygT-8Np1tG56cjfZcegx9ryUqb-p4bijYGk4nRMHRaJSmZuZIpJYJA/exec';
 
     // 페이지 열리자마자 실행!
     window.onload = function() {
@@ -434,25 +434,25 @@ function addComment() {
     const nickInput = document.getElementById('nickname-input');
     const contentInput = document.getElementById('comment-input');
     
-    const nickname = nickInput.value || "일촌"; // 이름을 안 쓰면 '일촌'으로 표시
-    const content = contentInput.value;
+    const nickname = nickInput.value.trim() || "일촌"; 
+    const content = contentInput.value.trim();
 
     if (!content) return alert("일촌평을 입력해주세요!");
 
-    // HTML 내 script 부분
-fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ 
-        nickname: nickname, // 이 이름표(nickname)가 doPost의 jsonData.nickname과 연결돼요!
-        content: content 
+    fetch(scriptURL, { // ← 여기서 scriptURL은 새로 배포한 URL이어야 함!
+        method: 'POST',
+        body: JSON.stringify({ 
+            nickname: nickname, // 'nickname' 이라는 이름으로 보냄
+            content: content    // 'content' 라는 이름으로 보냄
+        })
     })
-})
     .then(() => {
-        nickInput.value = ''; // 이름창 비우기
-        contentInput.value = ''; // 입력창 비우기
+        nickInput.value = '';
+        contentInput.value = '';
         alert(nickname + "님의 일촌평이 등록되었습니다! 🥓");
-        loadComments(); // 즉시 새로고침
-    })
+        loadComments(); 
+    });
+}
     .catch(error => console.error('Error!', error.message));
 }
     // 탭 전환 기능
