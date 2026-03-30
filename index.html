@@ -210,7 +210,26 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 
             <div id="home" class="tab-content active">
                 <div class="miniroom-area">
+                    <div class="main-section">
+    <img src="miniroom.png" class="miniroom-area-pic">
                     </div>
+                    <style>
+    .miniroom-area {
+        width: 100%;
+        height:360px; /* 만약 너무 답답하면 이 숫자를 300px로 늘려봐! */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .miniroom-area-pic {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* ↓ 이 줄을 추가하면 사진의 '아래쪽(리듬이 쪽)'을 우선적으로 보여줘! */
+        object-position: bottom; 
+        display: block;
+    }
+</style>  
                 <div class="guest-say">
                     <div style="color: #238db3; font-weight: bold; margin-bottom: 10px;">What friends say</div>
                     <div class="input-box">
