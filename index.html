@@ -253,10 +253,11 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
  </div>
                 <div class="guest-say">
                     <div style="color: #238db3; font-weight: bold; margin-bottom: 10px;">What friends say</div>
-                    <div class="input-box">
-                        <input type="text" id="comment-input" placeholder="일촌평을 남겨주세요!">
-                        <button onclick="addComment()">확인</button>
-                    </div>
+                   <div class="input-box">
+    <input type="text" id="nickname-input" placeholder="이름" style="width: 50px; flex: none;">
+    <input type="text" id="comment-input" placeholder="일촌평을 남겨주세요!" style="flex: 1;">
+    <button onclick="addComment()">확인</button>
+</div>
                     <div id="comment-list">
                         <div class="comment-item"><b>용후니럽</b> 용훈아 삽겹살 많이 먹어ㅓㅓ!</div>
                         <div class="comment-item"><b>도토리수집가</b> 주인장 잘생기셨네요. 용훈님 생일 축하해요!</div>
@@ -407,42 +408,48 @@ const scriptURL = ' https://script.google.com/macros/s/AKfycbwKvE2SH6jShZcBmBcsb
         loadComments();
     };
 
-    // 시트에서 일촌평 불러오기 함수
-    function loadComments() {
-        const list = document.getElementById('comment-list');
-        
-        fetch(scriptURL)
-        .then(res => res.json())
-        .then(data => {
-            list.innerHTML = ''; // 기존 리스트 비우기
-            // 최신글이 위로 오게 뒤집어서(reverse) 화면에 뿌리기
-            data.reverse().forEach(item => {
-                const newItem = document.createElement('div');
-                newItem.className = 'comment-item';
-                newItem.innerHTML = `<b>일촌</b> ${item.content}`;
-                list.appendChild(newItem);
-            });
-        })
-        .catch(error => console.error('불러오기 에러:', error));
-    }
+// 일촌평 불러오기 기능 (이름 표시 포함)
+function loadComments() {
+    const list = document.getElementById('comment-list');
+    const cacheBuster = scriptURL + "?t=" + new Date().getTime();
 
-    // 일촌평 쓰기 함수
-    function addComment() {
-        const input = document.getElementById('comment-input');
-        const content = input.value;
-        if (!content) return alert("일촌평을 입력해주세요!");
+    fetch(cacheBuster)
+    .then(res => res.json())
+    .then(data => {
+        list.innerHTML = ''; 
+        data.reverse().forEach(item => {
+            const newItem = document.createElement('div');
+            newItem.className = 'comment-item';
+            // 시트에서 가져온 nickname을 <b> 태그에 넣어줌
+            newItem.innerHTML = `<b>${item.nickname || '일촌'}</b> ${item.content}`;
+            list.appendChild(newItem);
+        });
+    })
+    .catch(error => console.error('불러오기 에러:', error));
+}
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify({ content: content })
-        })
-        .then(() => {
-            input.value = ''; // 입력창 비우기
-            alert("일촌평이 등록되었습니다! 🥓");
-            loadComments(); // 쓰자마자 다시 불러와서 화면 갱신!
-        })
-        .catch(error => console.error('쓰기 에러:', error));
-    }
+// 일촌평 추가 기능
+function addComment() {
+    const nickInput = document.getElementById('nickname-input');
+    const contentInput = document.getElementById('comment-input');
+    
+    const nickname = nickInput.value || "일촌"; // 이름을 안 쓰면 '일촌'으로 표시
+    const content = contentInput.value;
+
+    if (!content) return alert("일촌평을 입력해주세요!");
+
+    fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({ nickname: nickname, content: content })
+    })
+    .then(() => {
+        nickInput.value = ''; // 이름창 비우기
+        contentInput.value = ''; // 입력창 비우기
+        alert(nickname + "님의 일촌평이 등록되었습니다! 🥓");
+        loadComments(); // 즉시 새로고침
+    })
+    .catch(error => console.error('Error!', error.message));
+}
     // 탭 전환 기능
     function switchTab(btn, tabId) {
         // 모든 탭 콘텐츠 숨기기
