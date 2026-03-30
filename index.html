@@ -431,79 +431,74 @@ function surf() {
 }
     
     // 일촌평 추가 기능
-    <script>
-function addComment() {
-    const input = document.getElementById('comment-input');
-    const content = input.value;
+// 일촌평 추가 기능
+    function addComment() {
+        const input = document.getElementById('comment-input');
+        const content = input.value;
 
-    if (!content) return alert("일촌평을 입력해주세요!");
+        if (!content) return alert("일촌평을 입력해주세요!");
 
-    // 아까 복사한 구글 웹 앱 URL을 여기에 넣으세요
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwVbdnAS0BnfzOybJC1ecaft9a4Q_daeLJNMlhzgGd2hE4_kV0JFDKK8J4165n5AZMAKA/exec';
+        // 구글 웹 앱 URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwVbdnAS0BnfzOybJC1ecaft9a4Q_daeLJNMlhzgGd2hE4_kV0JFDKK8J4165n5AZMAKA/exec';
 
-    // 구글 시트로 전송
-    fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ content: content })
-    })
-    .then(response => {
-        // 성공하면 화면에 즉시 표시 (기존 코드 활용)
-        const list = document.getElementById('comment-list');
-        const newItem = document.createElement('div');
-        newItem.className = 'comment-item';
-        newItem.innerHTML = `<b>일촌</b> ${content}`;
-        list.prepend(newItem);
-        
-        input.value = ''; // 입력창 비우기
-        alert("일촌평이 등록되었습니다! 🥓");
-    })
-    .catch(error => console.error('Error!', error.message));
-}
-</script>
-<script>
-    // BGM
-    function toggleBgm() {
-    const bgm = document.getElementById('my-bgm');
-    const bgmItem = document.getElementById('bgm-item');
-    const bgmStatus = document.getElementById('bgm-status');
-    
-    if (bgm.paused) {
-        // 재생 시작
-        bgm.play();
-        bgm.volume = 0.4; // 너무 크지 않게 볼륨 조절
-        bgmStatus.innerText = "▶"; // 꽉 찬 화살표로 변경
-        bgmItem.style.color = "#6b30ff"; // 재생 중일 때 주황색으로 변경
-        bgmItem.style.fontWeight = "bold";
-    } else {
-        // 정지
-        bgm.pause();
-        bgmStatus.innerText = "▷"; // 빈 화살표로 변경
-        bgmItem.style.color = "#666"; // 원래 색으로 복구
-        bgmItem.style.fontWeight = "normal";
+        // 구글 시트로 전송
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // 보안 오류 방지
+            body: JSON.stringify({ content: content })
+        })
+        .then(() => {
+            // 성공하면 화면에 표시
+            const list = document.getElementById('comment-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'comment-item';
+            newItem.innerHTML = `<b>일촌</b> ${content}`;
+            list.prepend(newItem);
+            
+            input.value = ''; // 입력창 비우기
+            alert("일촌평이 등록되었습니다! 🥓");
+        })
+        .catch(error => console.error('Error!', error.message));
     }
-}
-    // 퍼가요 말풍선 보여주기 함수
-function showScrapMsg() {
-    const msg = document.getElementById('scrap-msg');
-    
-    // 말풍선 보이기
-    msg.style.display = 'block';
-    
-    // 1.5초 뒤에 자동으로 숨기기
-    setTimeout(function() {
-        msg.style.display = 'none';
-    }, 1500); // 1500ms = 1.5초
-}
-    // 기존 toggleBgm 함수 안에 추가하거나 아래에 따로 두세요
-const bgm = document.getElementById('my-bgm');
-const progressBar = document.getElementById('bgm-progress');
 
-bgm.ontimeupdate = function() {
-    const progress = (bgm.currentTime / bgm.duration) * 100;
-    if(progressBar) progressBar.style.width = progress + "%";
-};
+    // BGM 및 기타 기능들
+    function toggleBgm() {
+        const bgm = document.getElementById('my-bgm');
+        const bgmItem = document.getElementById('bgm-item');
+        const bgmStatus = document.getElementById('bgm-status');
+        
+        if (bgm.paused) {
+            bgm.play();
+            bgm.volume = 0.4;
+            bgmStatus.innerText = "▶"; 
+            bgmItem.style.color = "#6b30ff";
+            bgmItem.style.fontWeight = "bold";
+        } else {
+            bgm.pause();
+            bgmStatus.innerText = "▷";
+            bgmItem.style.color = "#666";
+            bgmItem.style.fontWeight = "normal";
+        }
+    }
+
+    function showScrapMsg() {
+        const msg = document.getElementById('scrap-msg');
+        msg.style.display = 'block';
+        setTimeout(function() {
+            msg.style.display = 'none';
+        }, 1500);
+    }
+
+    const myBgm = document.getElementById('my-bgm');
+    const progressBar = document.getElementById('bgm-progress');
+
+    myBgm.ontimeupdate = function() {
+        if(myBgm.duration > 0) {
+            const progress = (myBgm.currentTime / myBgm.duration) * 100;
+            if(progressBar) progressBar.style.width = progress + "%";
+        }
+    };
 </script>
 
 </body>
 </html>
-
