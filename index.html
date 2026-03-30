@@ -164,27 +164,53 @@
         <p><b>20. 업데이트 날짜?</b> 2026. 04. 20</p>
                 </div>
             </div>
-
-            <div id="photo" class="tab-content">
-                <b style="color:#238db3;">[Photo Album]</b><hr>
-                <div id="scrap-msg" class="scrap-popup">퍼가요~♡</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;">
-                    <div class="photo-item" style="background: #fff; border: 1px solid #ddd; padding: 10px; text-align: center;">
-                        <img src="IMG_4351.JPG" onclick="showScrapMsg()" style="width: 100%; aspect-ratio: 3/2; object-fit: cover;">
-                        <div style="font-size: 11px; font-weight: bold; margin-top:5px;">Merry Christmas 🩵</div>
-                    </div>
-                </div>
+ <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;">
+        
+        <div class="photo-item" style="background: #fff; border: 1px solid #ddd; padding: 10px; text-align: center;">
+            <div style="width: 100%; aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 8px;">
+                <img src="IMG_4351.JPG" 
+                     onclick="showScrapMsg()" 
+                     style="width: 100%; height: 100%; object-fit: cover; " 
+                     alt="메리 크리스마스~">
             </div>
+            <div style="font-size: 11px; color: #333; font-weight: bold;">Merry Christmas 🩵</div>
+        </div>
 
-            <div id="guestbook" class="tab-content">
-                <div style="padding: 10px;">
-                    <div style="background-color: #f1f1f1; padding: 5px 10px; font-size: 11px;">
-                        <span style="color: #238db3; font-weight: bold;">NO. 1</span> 미유팬1호 🏠
-                    </div>
-                    <div style="padding: 10px; font-size: 12px; line-height:1.6;">미유야 생일 너무 축하해! 🧡</div>
-                </div>
+        <div class="photo-item" style="background: #fff; border: 1px solid #ddd; padding: 10px; text-align: center;">
+            <div style="width: 100%; aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 8px;">
+                <img src="사진주소2" 
+                     onclick="showScrapMsg()" 
+                     style="width: 100%; height: 100%; object-fit: cover; " 
+                     alt="사진2">
+            </div>
+            <div style="font-size: 11px; color: #333; font-weight: bold;">🧸 픽셀 캐릭터 완성!</div>
+        </div>
+
+    </div>
+</div>
+
+          <div id="guestbook" class="tab-content" style="padding: 10px; overflow-y: auto; max-height: 450px;">
+    
+    <div style="margin-bottom: 20px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+        <div style="background-color: #f1f1f1; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 2px;">
+            <div style="font-size: 11px; color: #666;">
+                <span style="color: #238db3; font-weight: bold;">NO. 1</span> 
+                <span style="margin-left: 10px; color: #333;">미유팬1호</span> 🏠
+            </div>
+            <div style="font-size: 11px; color: #999;">(2026.03.25 14:30)</div>
+        </div>
+        
+        <div style="display: flex; padding: 10px 0;">
+            <div style="width: 80px; text-align: center;">
+                <img src="https://i.ibb.co/68vM97D/pixel-heart-cursor.png" style="width: 50px; filter: grayscale(0.5);">
+            </div>
+            <div style="flex: 1; font-size: 12px; line-height: 1.6; color: #444; padding-left: 10px;">
+                미유야 생일 너무 축하해! <br>
+                이번 생카 주최해주셔서 너무 감사합니다. <br>
+                미니홈피 구경하는 재미가 쏠쏠하네요! 🧡
             </div>
         </div>
+    </div>
 
         <div class="side-tabs">
             <button class="tab-btn active" onclick="switchTab(this, 'home')">홈</button>
