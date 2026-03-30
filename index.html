@@ -481,6 +481,7 @@ function surf() {
             list.prepend(newItem);
             
             input.value = ''; // 입력창 비우기
+            loadComments();
             alert("일촌평이 등록되었습니다! 🥓");
         })
         .catch(error => console.error('Error!', error.message));
