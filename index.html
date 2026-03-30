@@ -431,19 +431,35 @@ function surf() {
 }
     
     // 일촌평 추가 기능
-    function addComment() {
-        const input = document.getElementById('comment-input');
-        const list = document.getElementById('comment-list');
-        
-        if (input.value.trim() === "") return;
+    <script>
+function addComment() {
+    const input = document.getElementById('comment-input');
+    const content = input.value;
 
-        const newComment = document.createElement('div');
-        newComment.className = 'comment-item';
-        newComment.innerHTML = `<b>이포리♡</b> ${input.value}`;
+    if (!content) return alert("일촌평을 입력해주세요!");
+
+    // 아까 복사한 구글 웹 앱 URL을 여기에 넣으세요
+    const scriptURL = '여기에_복사한_URL_넣기';
+
+    // 구글 시트로 전송
+    fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({ content: content })
+    })
+    .then(response => {
+        // 성공하면 화면에 즉시 표시 (기존 코드 활용)
+        const list = document.getElementById('comment-list');
+        const newItem = document.createElement('div');
+        newItem.className = 'comment-item';
+        newItem.innerHTML = `<b>일촌</b> ${content}`;
+        list.prepend(newItem);
         
-        list.insertBefore(newComment, list.firstChild);
-        input.value = "";
-    }
+        input.value = ''; // 입력창 비우기
+        alert("일촌평이 등록되었습니다! 🥓");
+    })
+    .catch(error => console.error('Error!', error.message));
+}
+</script>
 
     // BGM
     function toggleBgm() {
