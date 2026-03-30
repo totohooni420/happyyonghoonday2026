@@ -398,31 +398,49 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-    // 페이지가 로딩되면 실행!
-window.onload = function() {
-    loadComments(); 
-};
+const scriptURL = '여기에_방금_복사한_새_웹앱_URL_넣기';
 
-function loadComments() {
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwx1YwnxVgl4UvCk4VrO76EOsiOIZk8FF-QT7YVWKTI66kWXmGygCA07Hjs7hrjGhlxTg/exec';
-    const list = document.getElementById('comment-list');
+    // 페이지 열리자마자 실행!
+    window.onload = function() {
+        loadComments();
+    };
 
-    fetch(scriptURL)
-    .then(res => res.json())
-    .then(data => {
-        // 기존 리스트 비우기 (중복 방지)
-        list.innerHTML = '';
+    // 시트에서 일촌평 불러오기 함수
+    function loadComments() {
+        const list = document.getElementById('comment-list');
         
-        // 시트 데이터를 최신순으로 화면에 뿌리기
-        data.reverse().forEach(item => {
-            const newItem = document.createElement('div');
-            newItem.className = 'comment-item';
-            newItem.innerHTML = `<b>일촌</b> ${item.content}`;
-            list.appendChild(newItem);
-        });
-    })
-    .catch(error => console.error('Error loading comments:', error));
-}
+        fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+            list.innerHTML = ''; // 기존 리스트 비우기
+            // 최신글이 위로 오게 뒤집어서(reverse) 화면에 뿌리기
+            data.reverse().forEach(item => {
+                const newItem = document.createElement('div');
+                newItem.className = 'comment-item';
+                newItem.innerHTML = `<b>일촌</b> ${item.content}`;
+                list.appendChild(newItem);
+            });
+        })
+        .catch(error => console.error('불러오기 에러:', error));
+    }
+
+    // 일촌평 쓰기 함수
+    function addComment() {
+        const input = document.getElementById('comment-input');
+        const content = input.value;
+        if (!content) return alert("일촌평을 입력해주세요!");
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify({ content: content })
+        })
+        .then(() => {
+            input.value = ''; // 입력창 비우기
+            alert("일촌평이 등록되었습니다! 🥓");
+            loadComments(); // 쓰자마자 다시 불러와서 화면 갱신!
+        })
+        .catch(error => console.error('쓰기 에러:', error));
+    }
     // 탭 전환 기능
     function switchTab(btn, tabId) {
         // 모든 탭 콘텐츠 숨기기
