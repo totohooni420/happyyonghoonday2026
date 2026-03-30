@@ -401,7 +401,7 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-const scriptURL = ' https://script.google.com/macros/s/AKfycbwsXCz4ZUSm_e8viejCRuCAHttZofMU5xu92_nvm7J0XFrULQL17cnJxUq-8uuQasSQ/exec';
+const scriptURL = ' https://script.google.com/macros/s/AKfycbyaOHuVdLFMrCFKHsGmD6mpG6xeZaRp2B6zBfAq1QwkxM9v1mHEHDeU6AdXBhloECUH/exec';
 
     // 페이지 열리자마자 실행!
     window.onload = function() {
@@ -417,19 +417,18 @@ function loadComments() {
     .then(res => res.json())
     .then(data => {
         list.innerHTML = ''; 
-        data.reverse().forEach(item => {
-            const newItem = document.createElement('div');
-            newItem.className = 'comment-item';
-            // 시트에서 가져온 nickname을 <b> 태그에 넣어줌
-            const name = item.nickname ? item.nickname : '일촌'; 
-    newItem.innerHTML = `<b>${name}</b> ${item.content}`;
-    list.appendChild(newItem);
-        });
+        if (data && data.length > 0) {
+            data.reverse().forEach(item => {
+                const newItem = document.createElement('div');
+                newItem.className = 'comment-item';
+                newItem.innerHTML = `<b>${item.nickname || '일촌'}</b> ${item.content || ''}`;
+                list.appendChild(newItem);
+            });
+        }
     })
-    .catch(error => console.error('불러오기 에러:', error));
+    .catch(err => console.error("불러오기 에러:", err));
 }
 
-// 일촌평 추가 기능
 function addComment() {
     const nickInput = document.getElementById('nickname-input');
     const contentInput = document.getElementById('comment-input');
@@ -439,20 +438,24 @@ function addComment() {
 
     if (!content) return alert("일촌평을 입력해주세요!");
 
-    fetch(scriptURL, { // ← 새로 배포한 URL인지 꼭 확인!
+    fetch(scriptURL, {
         method: 'POST',
+        // [핵심] Apps Script의 이름표와 똑같이 user_name, user_msg로 보냄!
         body: JSON.stringify({ 
-            user_name: nickname, // 'user_name' 이라는 이름표를 붙임
-            user_msg: content    // 'user_msg' 라는 이름표를 붙임
+            user_name: nickname, 
+            user_msg: content 
         })
     })
     .then(() => {
         nickInput.value = '';
         contentInput.value = '';
         alert(nickname + "님의 일촌평이 등록되었습니다! 🥓");
-        loadComments(); 
+        loadComments(); // 즉시 새로고침
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error("전송 에러:", err);
+        alert("전송에 실패했어요. URL이나 배포 설정을 확인해봐!");
+    });
 }
     // 탭 전환 기능
     function switchTab(btn, tabId) {
