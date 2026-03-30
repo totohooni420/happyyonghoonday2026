@@ -398,7 +398,7 @@ body /* Cute Strawberry - https://www.cursors-4u.com/cursor/cute-strawberry */
 </div>
 
 <script>
-// [수정] 주소 앞의 공백을 제거했습니다!
+// [확인] 주소 앞에 공백이 없는지 다시 한 번 체크했습니다!
 const scriptURL = 'https://script.google.com/macros/s/AKfycbz8pyolf5ijl6eY3pny3CQaDSKOwIHb4BkUZEu9dUgiSBIVXUCJwLhxcNaXK2dYtWj2/exec';
 
 window.onload = function() {
@@ -408,7 +408,6 @@ window.onload = function() {
 // 1. 일촌평 불러오기
 function loadComments() {
     const list = document.getElementById('comment-list');
-    // 캐시 방지를 위해 시간값 추가
     const cacheBuster = scriptURL + "?t=" + new Date().getTime();
 
     fetch(cacheBuster)
@@ -419,7 +418,6 @@ function loadComments() {
             data.reverse().forEach(item => {
                 const newItem = document.createElement('div');
                 newItem.className = 'comment-item';
-                // 닉네임과 내용을 시트 데이터와 정확히 매칭
                 newItem.innerHTML = `<b>${item.nickname || '일촌'}</b> ${item.content || ''}`;
                 list.appendChild(newItem);
             });
@@ -427,10 +425,13 @@ function loadComments() {
             list.innerHTML = '<div class="comment-item">아직 일촌평이 없어요! 🥓</div>';
         }
     })
-    .catch(err => console.error("불러오기 에러:", err));
+    .catch(err => {
+        console.error("불러오기 에러:", err);
+        list.innerHTML = '<div class="comment-item">목록을 불러오는 중이에요.. ✨</div>';
+    });
 }
 
-// 2. 일촌평 추가 (함수 하나로 통합 완료!)
+// 2. 일촌평 추가
 function addComment() {
     const nickInput = document.getElementById('nickname-input');
     const contentInput = document.getElementById('comment-input');
@@ -442,7 +443,6 @@ function addComment() {
 
     fetch(scriptURL, {
         method: 'POST',
-        // mode: 'no-cors'를 제거해야 시트 저장을 기다릴 수 있습니다.
         body: JSON.stringify({ 
             user_name: nickname, 
             user_msg: content 
@@ -452,11 +452,11 @@ function addComment() {
         alert(nickname + "님의 일촌평이 등록되었습니다! 🥓");
         nickInput.value = '';
         contentInput.value = '';
-        loadComments(); // 즉시 새로고침해서 목록 보여주기
+        loadComments(); 
     })
     .catch(err => {
         console.error("전송 에러:", err);
-        alert("전송에 실패했어요. URL에 공백이 없는지, 배포 설정이 'Anyone'인지 확인해봐!");
+        alert("전송에 실패했어요. 인터넷 연결이나 배포 설정을 확인해봐!");
     });
 }
 
@@ -479,7 +479,7 @@ function surf() {
     select.value = "";
 }
 
-// BGM 재생 및 아이콘 변경
+// BGM 기능
 function toggleBgm() {
     const bgm = document.getElementById('my-bgm');
     const bgmItem = document.getElementById('bgm-item');
@@ -499,22 +499,24 @@ function toggleBgm() {
     }
 }
 
-// 사진첩 퍼가요~ 알림
+// 퍼가요 알림
 function showScrapMsg() {
     const msg = document.getElementById('scrap-msg');
     msg.style.display = 'block';
     setTimeout(() => { msg.style.display = 'none'; }, 1500);
 }
 
-// BGM 진행 바 조절
+// BGM 진행 바
 const myBgm = document.getElementById('my-bgm');
 const progressBar = document.getElementById('bgm-progress');
-myBgm.ontimeupdate = function() {
-    if(myBgm.duration > 0) {
-        const progress = (myBgm.currentTime / myBgm.duration) * 100;
-        if(progressBar) progressBar.style.width = progress + "%";
-    }
+if (myBgm) {
+    myBgm.ontimeupdate = function() {
+        if(myBgm.duration > 0) {
+            const progress = (myBgm.currentTime / myBgm.duration) * 100;
+            if(progressBar) progressBar.style.width = progress + "%";
+        }
     };
+}
 </script>
 
 </body>
