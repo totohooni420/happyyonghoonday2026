@@ -274,6 +274,8 @@ window.onload = function() {
 
 function loadComments() {
     const list = document.getElementById('comment-list');
+    // 데이터를 가져오기 전에 미리 문구를 띄워줍니다!
+    list.innerHTML = '<div class="comment-item" style="color:#999;">일촌평을 불러오는 중... 🔍</div>';
     fetch(scriptURL + "?t=" + new Date().getTime())
     .then(res => res.json())
     .then(data => {
