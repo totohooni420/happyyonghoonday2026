@@ -370,7 +370,7 @@ function toggleBgm() {
     } else {
         bgm.pause(); bgmStatus.innerText = "▷";
     }
-}
+
     const bgm = document.getElementById('my-bgm');
 const progressBar = document.getElementById('bgm-progress');
 
@@ -384,6 +384,7 @@ bgm.ontimeupdate = function() {
     const progress = (bgm.currentTime / bgm.duration) * 100;
     if(progressBar) progressBar.style.width = progress + "%";
 };
+    }
 
 function showScrapMsg() {
     const msg = document.getElementById('scrap-msg');
