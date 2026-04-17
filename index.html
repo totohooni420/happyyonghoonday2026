@@ -96,7 +96,11 @@
             
             <div class="sidebar-box">
                 <div class="sidebar-title"><span>싸이 BGM</span><span style="color: #6b30ff; font-size: 9px;">♬</span></div>
-                <audio id="my-bgm" src="https://raw.githubusercontent.com/totohooni420/happyyonghoonday2026/main/seasons.mp3" loop></audio>
+                <audio id="my-bgm"
+       src="https://raw.githubusercontent.com/totohooni420/happyyonghoonday2026/main/seasons.mp3"
+       loop
+       playsinline>
+</audio>
                 <ul class="music-list">
     <li id="bgm-item" style="color:#6b30ff;" onclick="toggleBgm()">
         <span id="bgm-status">▷</span> 1. Seasons - 장용훈
@@ -289,6 +293,16 @@ HAPPY BIRTHDAY ♡ <br>
 
 
 <script>
+    // ✅ 여기에 넣기
+document.body.addEventListener('click', function initAudio() {
+    const bgm = document.getElementById('my-bgm');
+    bgm.play().then(() => {
+        bgm.pause();
+    }).catch(() => {});
+    
+    document.body.removeEventListener('click', initAudio);
+});
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbzjtTlO2UXkcavoFx_9nF8z32HLSw2-qa2KInY0QoC66zfFUpCjZe_AGHzIeZMXdpXx/exec';
 
 window.onload = function() {
