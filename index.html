@@ -96,11 +96,7 @@
             
             <div class="sidebar-box">
                 <div class="sidebar-title"><span>싸이 BGM</span><span style="color: #6b30ff; font-size: 9px;">♬</span></div>
-                <audio id="my-bgm"
-       src="https://raw.githubusercontent.com/totohooni420/happyyonghoonday2026/main/seasons.mp3"
-       loop
-       playsinline>
-</audio>
+                <audio id="my-bgm" src="https://raw.githubusercontent.com/totohooni420/happyyonghoonday2026/main/seasons.mp3" loop></audio>
                 <ul class="music-list">
     <li id="bgm-item" style="color:#6b30ff;" onclick="toggleBgm()">
         <span id="bgm-status">▷</span> 1. Seasons - 장용훈
@@ -293,16 +289,6 @@ HAPPY BIRTHDAY ♡ <br>
 
 
 <script>
-    // ✅ 여기에 넣기
-document.body.addEventListener('click', function initAudio() {
-    const bgm = document.getElementById('my-bgm');
-    bgm.play().then(() => {
-        bgm.pause();
-    }).catch(() => {});
-    
-    document.body.removeEventListener('click', initAudio);
-});
-
 const scriptURL = 'https://script.google.com/macros/s/AKfycbzjtTlO2UXkcavoFx_9nF8z32HLSw2-qa2KInY0QoC66zfFUpCjZe_AGHzIeZMXdpXx/exec';
 
 window.onload = function() {
@@ -376,33 +362,13 @@ function switchTab(btn, tabId) {
     btn.classList.add('active');
 }
 
-// BGM
-  function toggleBgm() {
+function toggleBgm() {
     const bgm = document.getElementById('my-bgm');
-    const bgmItem = document.getElementById('bgm-item');
     const bgmStatus = document.getElementById('bgm-status');
-    
     if (bgm.paused) {
-        // 모바일 브라우저에게 "재생할게!"라고 강하게 말하기
-        var playPromise = bgm.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                // 재생 성공!
-                bgm.volume = 0.5;
-                bgmStatus.innerText = "▶";
-                bgmItem.style.color = "#6c47ff"; // 보라색
-                bgmItem.style.fontWeight = "bold";
-            }).catch(error => {
-                // 재생 실패 시 (보통 주소 문제나 첫 터치 미흡)
-                console.log("Playback prevented");
-            });
-        }
+        bgm.play(); bgmStatus.innerText = "▶";
     } else {
-        bgm.pause();
-        bgmStatus.innerText = "▷";
-        bgmItem.style.color = "#666";
-        bgmItem.style.fontWeight = "normal";
+        bgm.pause(); bgmStatus.innerText = "▷";
     }
 }
 
