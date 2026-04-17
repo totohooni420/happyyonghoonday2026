@@ -364,11 +364,28 @@ function switchTab(btn, tabId) {
 
 function toggleBgm() {
     const bgm = document.getElementById('my-bgm');
+    const bgmItem = document.getElementById('bgm-item');
     const bgmStatus = document.getElementById('bgm-status');
+    
+    // 모바일 터치 반응을 위해 오디오 객체를 먼저 준비
     if (bgm.paused) {
-        bgm.play(); bgmStatus.innerText = "▶";
+        // 재생 시도
+        bgm.play().then(() => {
+            // 재생 성공 시 스타일 변경
+            bgm.volume = 0.5;
+            bgmStatus.innerText = "▶";
+            bgmItem.style.color = "#6c47ff"; // 보라색!
+            bgmItem.style.fontWeight = "bold";
+        }).catch(error => {
+            // 실패 시 알림 (주로 주소 문제나 브라우저 차단)
+            console.log("재생 실패:", error);
+            alert("음악을 재생하려면 화면을 한 번 터치해주세요! ♬");
+        });
     } else {
-        bgm.pause(); bgmStatus.innerText = "▷";
+        bgm.pause();
+        bgmStatus.innerText = "▷";
+        bgmItem.style.color = "#666";
+        bgmItem.style.fontWeight = "normal";
     }
 }
 
