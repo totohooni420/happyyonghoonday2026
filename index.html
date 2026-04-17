@@ -365,10 +365,28 @@ function switchTab(btn, tabId) {
 function toggleBgm() {
     const bgm = document.getElementById('my-bgm');
     const bgmStatus = document.getElementById('bgm-status');
+    
+    // [중요] 모바일에서 주소가 꼬였을 때를 대비해 강제로 다시 로드 시도
+    if (bgm.readyState === 0) { 
+        bgm.load(); 
+    }
+
     if (bgm.paused) {
-        bgm.play(); bgmStatus.innerText = "▶";
+        // play()는 Promise를 반환하므로 catch로 에러를 잡아야 합니다.
+        var playPromise = bgm.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                bgmStatus.innerText = "▶";
+            }).catch(error => {
+                console.log("재생 실패:", error);
+                // 아이폰 등에서 재생 실패 시 안내
+                alert("음악 파일을 불러오는 중입니다. 잠시 후 다시 '▶'를 눌러주세요! 🎵");
+            });
+        }
     } else {
-        bgm.pause(); bgmStatus.innerText = "▷";
+        bgm.pause(); 
+        bgmStatus.innerText = "▷";
     }
 }
 
