@@ -363,24 +363,32 @@ function switchTab(btn, tabId) {
 }
 
 // BGM
-    function toggleBgm() {
-    const bgm = document.getElementById(’my-bgm‘);
-    const bgmItem = document.getElementById(’bgm-item‘);
-    const bgmStatus = document.getElementById(’bgm-status‘);
+  function toggleBgm() {
+    const bgm = document.getElementById('my-bgm');
+    const bgmItem = document.getElementById('bgm-item');
+    const bgmStatus = document.getElementById('bgm-status');
     
     if (bgm.paused) {
-        // 재생 시작
-        bgm.play();
-        bgm.volume = 0.4; // 너무 크지 않게 볼륨 조절
-        bgmStatus.innerText = ”▶“; // 꽉 찬 화살표로 변경
-        bgmItem.style.color = ”#ff8a00“; // 재생 중일 때 주황색으로 변경
-        bgmItem.style.fontWeight = ”bold“;
+        // 모바일 브라우저에게 "재생할게!"라고 강하게 말하기
+        var playPromise = bgm.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // 재생 성공!
+                bgm.volume = 0.5;
+                bgmStatus.innerText = "▶";
+                bgmItem.style.color = "#6c47ff"; // 보라색
+                bgmItem.style.fontWeight = "bold";
+            }).catch(error => {
+                // 재생 실패 시 (보통 주소 문제나 첫 터치 미흡)
+                console.log("Playback prevented");
+            });
+        }
     } else {
-        // 정지
         bgm.pause();
-        bgmStatus.innerText = ”▷“; // 빈 화살표로 변경
-        bgmItem.style.color = ”#666“; // 원래 색으로 복구
-        bgmItem.style.fontWeight = ”normal“;
+        bgmStatus.innerText = "▷";
+        bgmItem.style.color = "#666";
+        bgmItem.style.fontWeight = "normal";
     }
 }
 
